@@ -1,0 +1,5 @@
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <solid android:color="#F1F1F1" /> <!-- اللون الرمادي الفاتح -->
+    <corners android:radius="12dp" /> <!-- زوايا دائرية -->
+    <padding android:left="8dp" android:top="8dp" android:right="20dp" android:bottom="8dp" />
+</shape>
