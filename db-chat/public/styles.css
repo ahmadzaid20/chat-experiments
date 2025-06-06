@@ -1,0 +1,104 @@
+body {
+    font-family: Arial, sans-serif;
+}
+#messages {
+    width: 90%;
+    height: 300px;
+    overflow-y: scroll;
+    padding: 10px;
+    border: 1px solid #ccc;
+}
+.message {
+    padding: 10px;
+    margin: 5px;
+    border-radius: 10px;
+    max-width: 70%;
+    word-wrap: break-word;
+}
+.message.you {
+    background-color: #d4edda;
+    text-align: left;
+    margin-left: 0;
+    border-radius: 10px 10px 10px 0px;
+}
+.message.other {
+    background-color: #f1f1f1;
+    text-align: right;
+    margin-left: auto;
+    border-radius: 10px 0px 10px 10px;
+}
+.message .meta {
+    font-size: 0.8em;
+    color: #555;
+}
+.message .meta strong {
+    font-weight: bold;
+}
+#messageInput, #usernameInput, #roomInput {
+    width: calc(100% - 120px);
+    padding: 10px;
+    margin: 10px auto;
+    margin-right: 10px;
+    border: 1px solid #ccc;
+}
+#sendBtn, #saveUsernameBtn {
+    padding: 10px 20px;
+    border: none;
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+}
+#sendBtn:hover, #saveUsernameBtn:hover {
+    background-color: #0056b3;
+}
+.date-divider {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    margin: 20px 0;
+    position: relative;
+}
+.date-divider span {
+    background-color: #f1f1f1;
+    padding: 0 10px;
+    color: #555;
+    font-size: 0.9em;
+    font-weight: bold;
+}
+.date-divider::before,
+.date-divider::after {
+    content: '';
+    flex: 1;
+    border-bottom: 1px solid #ccc;
+}
+.date-divider::before {
+    margin-right: 10px;
+}
+.date-divider::after {
+    margin-left: 10px;
+}
+#typingIndicator {
+    font-size: 0.9em;
+    color: #555;
+    margin: 10px auto;
+    text-align: left;
+    width: 90%;
+    height: 0.9em;
+    visibility: hidden;
+}
+#users {
+    font-size: 1em;
+    margin: 10px auto;
+    width: 90%;
+    list-style: none;
+    padding-left: 0;
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
+}
+#users li::after {
+    content: ', ';
+}
+#users li:last-child::after {
+    content: '';
+}

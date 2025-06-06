@@ -1,0 +1,135 @@
+[
+    {
+        "messageId": "6842dac346f16",
+        "username": "1",
+        "userId": "11",
+        "room": "1",
+        "message": "1",
+        "timestamp": "2025-06-06 14:10:43",
+        "action": "sendMessage",
+        "status": {
+            "sent": [
+                "11"
+            ],
+            "received": [
+                "11",
+                "22"
+            ],
+            "seen": []
+        }
+    },
+    {
+        "messageId": "6842dbae35595",
+        "username": "1",
+        "userId": "11",
+        "room": "1",
+        "message": "1",
+        "timestamp": "2025-06-06 14:14:38",
+        "action": "sendMessage",
+        "status": {
+            "sent": [
+                "11"
+            ],
+            "received": [
+                "22",
+                "11"
+            ],
+            "seen": []
+        }
+    },
+    {
+        "messageId": "6842dbb277cc6",
+        "username": "2",
+        "userId": "22",
+        "room": "1",
+        "message": "2",
+        "timestamp": "2025-06-06 14:14:42",
+        "action": "sendMessage",
+        "status": {
+            "sent": [
+                "22"
+            ],
+            "received": [
+                "22",
+                "11"
+            ],
+            "seen": []
+        }
+    },
+    {
+        "messageId": "6842df02b6af9",
+        "username": "3",
+        "userId": "33",
+        "room": "1",
+        "message": "3.",
+        "timestamp": "2025-06-06 14:28:50",
+        "action": "sendMessage",
+        "status": {
+            "sent": [
+                "33"
+            ],
+            "received": [
+                "11",
+                "22"
+            ],
+            "seen": []
+        }
+    },
+    {
+        "messageId": "6842ecb955f75",
+        "username": "4",
+        "userId": "44",
+        "room": "1",
+        "message": "4",
+        "timestamp": "2025-06-06 15:27:21",
+        "action": "sendMessage",
+        "status": {
+            "sent": [
+                "44"
+            ],
+            "received": [
+                "11",
+                "22"
+            ],
+            "seen": []
+        }
+    },
+    {
+        "messageId": "6842ecbd07903",
+        "username": "1",
+        "userId": "11",
+        "room": "1",
+        "message": "11",
+        "timestamp": "2025-06-06 15:27:25",
+        "action": "sendMessage",
+        "status": {
+            "sent": [
+                "11"
+            ],
+            "received": [
+                "11",
+                "22"
+            ],
+            "seen": []
+        }
+    },
+    {
+        "messageId": "6842f3e5972da",
+        "username": "1",
+        "userId": "11",
+        "room": "1",
+        "message": "chat-experiments",
+        "timestamp": "2025-06-06 15:57:57",
+        "action": "sendMessage",
+        "status": {
+            "sent": [
+                "11"
+            ],
+            "received": [
+                "11",
+                "22"
+            ],
+            "seen": []
+        }
+    }
+]

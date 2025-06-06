@@ -1,0 +1,12 @@
+{
+  "name": "ahmad/chat-app",
+  "description": "Real-time chat with WebSockets in PHP",
+  "autoload": {
+    "psr-4": {
+      "ChatApp\\": "src/"
+    }
+  },
+  "require": {
+    "cboden/ratchet": "^0.4"
+  }
+}

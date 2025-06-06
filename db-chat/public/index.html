@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>db-chat</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <h1>Chat</h1>
+    <input type="text" id="usernameInput" placeholder="Enter your name">
+    <input type="text" id="roomInput" placeholder="Enter room name">
+    <button id="saveUsernameBtn">Save Username</button>
+    <ul id="users"></ul>
+    <div id="messages" data-last-date=""></div>
+    <div id="typingIndicator"></div>
+    <input type="text" id="messageInput" placeholder="Enter your message" disabled>
+    <button id="sendBtn" disabled>Send</button>
+
+    <script>
+        let username = null;
+        let room = null;
+        let socket = null;
+        let typingTimeout;
+        const TYPING_DELAY = 3000;
+
+        document.getElementById('saveUsernameBtn').addEventListener('click', function () {
+            const usernameInput = document.getElementById('usernameInput').value;
+            const roomInput = document.getElementById('roomInput').value;
+            if (usernameInput.trim() !== "" && roomInput.trim() !== "") {
+                username = usernameInput;
+                room = roomInput;
+                alert(`Username saved as ${username} in room ${room}`);
+
+                socket = new WebSocket(`ws://localhost:8080?username=${encodeURIComponent(username)}&room=${encodeURIComponent(room)}`);
+
+                socket.addEventListener('open', function () {
+                    socket.send(JSON.stringify({ action: 'checkMessages', room: room }));
+                });
+
+                socket.addEventListener('message', function (event) {
+                    const messagesDiv = document.getElementById('messages');
+                    const typingIndicator = document.getElementById('typingIndicator');
+                    const usersList = document.getElementById('users');
+                    const receivedData = JSON.parse(event.data);
+
+                    let typingUsers = [];
+
+                    if (receivedData.action === 'typing') {
+                        typingUsers.push(receivedData.username);
+                        updateTypingIndicator();
+                    } else if (receivedData.action === 'stopTyping') {
+                        typingUsers = typingUsers.filter(user => user !== receivedData.username);
+                        updateTypingIndicator();
+                    } else if (receivedData.action === 'updateUsers') {
+                        usersList.textContent = receivedData.users.join(', ');
+                    } else {
+                        const newMessage = document.createElement('div');
+                        const timestamp = new Date(receivedData.timestamp);
+                        const timeString = timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+                        const dateString = timestamp.toLocaleDateString();
+
+                        const lastMessageDate = messagesDiv.getAttribute('data-last-date');
+                        if (lastMessageDate !== dateString) {
+                            const dateDivider = document.createElement('div');
+                            dateDivider.classList.add('date-divider');
+                            dateDivider.innerHTML = `<span>${dateString}</span>`;
+                            messagesDiv.appendChild(dateDivider);
+                            messagesDiv.setAttribute('data-last-date', dateString);
+                        }
+
+                        const displayName = receivedData.username === username ? 'You' : receivedData.username;
+
+                        newMessage.classList.add('message', receivedData.username === username ? 'you' : 'other');
+                        newMessage.innerHTML = `<div class="meta"><strong>${displayName}</strong> : ${timeString}</div>${receivedData.message}`;
+                        messagesDiv.appendChild(newMessage);
+                        messagesDiv.scrollTop = messagesDiv.scrollHeight;
+                    }
+
+                    function updateTypingIndicator() {
+                        if (typingUsers.length > 0) {
+                            typingIndicator.textContent = typingUsers.join(', ') + ' is typing...';
+                            typingIndicator.style.visibility = 'visible';
+                        } else {
+                            typingIndicator.textContent = '';
+                            typingIndicator.style.visibility = 'hidden';
+                        }
+                    }
+                });
+
+                document.getElementById('messageInput').disabled = false;
+                document.getElementById('sendBtn').disabled = false;
+            } else {
+                alert("Please enter a valid username and room name.");
+            }
+        });
+
+        document.getElementById('messageInput').addEventListener('input', function () {
+            if (socket && socket.readyState === WebSocket.OPEN) {
+                socket.send(JSON.stringify({
+                    username: username,
+                    room: room,
+                    action: 'typing'
+                }));
+                clearTimeout(typingTimeout);
+                typingTimeout = setTimeout(function() {
+                    socket.send(JSON.stringify({
+                        username: username,
+                        room: room,
+                        action: 'stopTyping'
+                    }));
+                }, TYPING_DELAY);
+            }
+        });
+
+        document.getElementById('sendBtn').addEventListener('click', function () {
+            const messageInput = document.getElementById('messageInput').value;
+            if (messageInput.trim() === "") return;
+
+            const timestamp = new Date().toISOString();
+            const messageData = {
+                username: username,
+                room: room,
+                message: messageInput,
+                timestamp: timestamp,
+                action: 'sendMessage'
+            };
+
+            socket.send(JSON.stringify(messageData));
+
+            const messagesDiv = document.getElementById('messages');
+            const typingIndicator = document.getElementById('typingIndicator');
+            const newMessage = document.createElement('div');
+            const timeString = new Date(timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
+            newMessage.classList.add('message', 'you');
+            newMessage.innerHTML = `<div class="meta"><strong>You</strong> : ${timeString}</div>${messageInput}`;
+            messagesDiv.appendChild(newMessage);
+            messagesDiv.scrollTop = messagesDiv.scrollHeight;
+
+            typingIndicator.textContent = '';
+            document.getElementById('messageInput').value = '';
+        });
+    </script>
+</body>
+</html>

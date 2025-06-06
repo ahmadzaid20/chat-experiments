@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>CrossChat</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <h1>CrossChat</h1>
+
+  <input type="text" id="usernameInput" placeholder="Enter your name">
+  <input type="text" id="roomInput" placeholder="Enter room name">
+  <input type="text" id="userIdInput" placeholder="Enter your User ID">
+  <button id="saveUsernameBtn">Join</button>
+
+  <ul id="users"></ul>
+
+  <div id="messages" data-last-date=""></div>
+  <div id="typingIndicator"></div>
+
+  <input type="text" id="messageInput" placeholder="Type your message..." disabled>
+  <button id="sendBtn" disabled>Send</button>
+
+  <script src="app.js"></script>
+</body>
+</html>

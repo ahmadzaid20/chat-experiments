@@ -1,0 +1,20 @@
+{
+  "name": "ahmadzaid/crosschat-json-android",
+  "description": "WebSocket-based chat app with JSON file storage and Android integration.",
+  "type": "project",
+  "require": {
+    "cboden/ratchet": "^0.4.4"
+  },
+  "autoload": {
+    "psr-4": {
+      "": "server/"
+    }
+  },
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Ahmad Zaid",
+      "email": "ahmad.m.dsalman20@gmail.com"
+    }
+  ]
+}
